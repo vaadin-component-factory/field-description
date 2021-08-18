@@ -12,7 +12,7 @@
     <artifactId>field-description-demo</artifactId>
     <name>Demo project for Field Description Component</name>
     <version>${fielddescription.demo.version}</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <repositories>
         <!-- The order of definitions matters. Explicitly defining central here to make sure it has the highest priority. -->
