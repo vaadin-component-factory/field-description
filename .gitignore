@@ -1,2 +1,26 @@
 
 .idea/
+
+node_modules/
+
+package.json
+
+package-lock.json
+
+webpack.config.js
+
+webpack.generated.js
+
+target/
+
+**/.DS_Store
+
+field-description-demo/.mvn/
+
+field-description-demo/.prettierrc.js
+
+field-description-demo/field-description-demo.iml
+
+field-description-demo/mvnw
+
+field-description-demo/mvnw.cmd
