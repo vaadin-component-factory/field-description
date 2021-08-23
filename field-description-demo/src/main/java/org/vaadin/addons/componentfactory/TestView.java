@@ -1,5 +1,6 @@
 package org.vaadin.addons.componentfactory;
 
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
@@ -32,5 +33,10 @@ public class TestView extends VerticalLayout {
         textField3.setWidth("400px");
 
         add(textField1, textField2, textField3);
+
+        Button button = new Button("update desc to check if it updates");
+        button.addClickListener(buttonClickEvent -> fieldDescription1.setDescription("dfalvjare akerjhg erlkge rlkgrgserg ersgesr gser gedrgdr gdrg rd  drgdrgdrge rioguweçrghrwthgrthgkrjhg rgrtgk rtgrtilgurt"));
+
+        add(button);
     }
 }

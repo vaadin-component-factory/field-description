@@ -8,58 +8,89 @@ export class VcfFieldDescription extends LitElement {
     renderDescriptionAsHtml = false;
 
     @property({type: String})
-    description = "";
-
-
-
-
-
-    @property({type: Boolean})
-    showPercentages = false;
-
+    description = ""
 /*
-<div class="bar-container">
-                ${JSON.parse(this.percentageValues).map( (val :number) =>
-                    this.renderBar( Math.round(val*10)/10 )
-                )}
-              </div>
-            </div>
+    @property({type: Boolean})
+    expanded = false;
 */
 
-    renderBar(val :number) {
-        return html`<div class="bar" style="flex: 0 0 ${val}%">${ this.showPercentages ? val + '%' : unsafeHTML('&nbsp;') }</div>`;
+    _isEllipsisActivated() {
+        var _this = this;
+        return new Promise((resolve) => setTimeout(() => {
+            let fieldDescriptionContainerElement = _this.querySelector<HTMLElement>('.field-description');
+            if(fieldDescriptionContainerElement != null) {
+                if(fieldDescriptionContainerElement.offsetWidth < fieldDescriptionContainerElement.scrollWidth) resolve(true);
+            }
+            resolve(false);
+        }, 10));
+    }
+
+    _renderExpandIcon() {
+        this._isEllipsisActivated().then(val => {
+            let element = this.querySelector<HTMLElement>('.expand-icon-container');
+            if(element) {
+                element.innerHTML = '';
+                if(val) {
+                    let iconElement = document.createElement('iron-icon');
+                    iconElement.setAttribute('aria-hidden', 'true');
+                    iconElement.setAttribute('tabindex', '-1');
+                    iconElement.setAttribute('icon', 'vaadin:info-circle');
+                    let _this = this;
+                    iconElement.onclick = function(ev) {
+                        console.log(ev);
+                        _this.toggleExpandDescription();
+                    }
+                    element.appendChild(iconElement);
+                }
+            }
+        });
+    }
+
+    toggleExpandDescription() {
+        console.log('FUUUUU')
     }
 
     render() {
         return html`
             <style>
-                .field-description-container {
+                vcf-field-description .field-description-container {
                     display: flex;
                 }
 
-                .field-description {
+                vcf-field-description .field-description {
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     flex-grow: 1;
                 }
 
-                .expand-icon-container {
+                vcf-field-description .expand-icon-container {
                     flex-grow: 0;
+                    min-width: 20px;
                 }
 
-                .expand-icon-container iron-icon {
+                vcf-field-description .expand-icon-container iron-icon {
                     height: 15px;
                 }
             </style>
 
             <div class="field-description-container">
                 <div class="field-description">
-                    ${this.renderDescriptionAsHtml ? unsafeHTML(this.description) : this.description}
+                    <span class="field-description-inner-span">
+                        ${ this.renderDescriptionAsHtml ? unsafeHTML(this.description) : this.description }
+                    </span>
                 </div>
                 <div class="expand-icon-container">
-                    <iron-icon aria-hidden="true" tabindex="-1" icon="vaadin:info-circle"></iron-icon>
+                    ${ this._renderExpandIcon() }
                 </div>
             </div>`;
     }
+
+    createRenderRoot() {
+      /**
+       * Render template without shadow DOM.
+       */
+        return this;
+    }
+
 }
