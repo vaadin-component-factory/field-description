@@ -8,10 +8,22 @@ export class VcfFieldDescription extends LitElement {
     renderDescriptionAsHtml = false;
 
     @property({type: String})
-    description = ""
+    description = "";
+
+    @property({type: Boolean})
+    renderFeedbackAsHtml = false;
+
+    @property({type: String})
+    feedbackState = "INFO";
+
+    @property({type: String})
+    feedbackContent = null;
 
     @property({type: Boolean})
     reserveDescriptionHeight = false;
+
+    @property({type: Boolean})
+    reserveFeedbackHeight = false;
 
     @property({type: Boolean})
     expandButtonIsKbFocusable = false;
@@ -64,10 +76,10 @@ export class VcfFieldDescription extends LitElement {
 
     _takeMeasurementsAndReserveHeights() {
         this._isEllipsisActivated().then(val => {
-            let containerElement = this.querySelector<HTMLElement>('.field-description-container');
+            let wrapperElement = this.querySelector<HTMLElement>('.field-description-component-wrapper');
             let textElement = this.querySelector<HTMLElement>('.field-description');
             let helperElement = this.querySelector<HTMLElement>('.field-description-helper-textmeasurements');
-            if(!containerElement || !helperElement) return;
+            if(!wrapperElement || !helperElement) return;
 
             if(textElement && helperElement) {
                 if(val || this._expanded) {
@@ -81,9 +93,9 @@ export class VcfFieldDescription extends LitElement {
             }
 
             //reserve heights
-            let minContainerHeight = 1;
-            if(this.reserveDescriptionHeight) minContainerHeight = minContainerHeight + this._fieldDescriptionTextMeasuredHeight;
-            containerElement.style.minHeight = `${minContainerHeight}px`
+            let minWrapperHeight = 1;
+            if(this.reserveDescriptionHeight) minWrapperHeight = minWrapperHeight + this._fieldDescriptionTextMeasuredHeight;
+            wrapperElement.style.minHeight = `${minWrapperHeight}px`
         });
     }
 
@@ -128,6 +140,13 @@ export class VcfFieldDescription extends LitElement {
     render() {
         return html`
             <style>
+                :root {
+                    --field-description-success-color: var(--lumo-success-text-color);
+                    --field-description-info-color: #2a88c7;
+                    --field-description-warn-color: #c78f2a;
+                    --field-description-error-color: var(--lumo-error-text-color);
+                }
+
                 vcf-field-description .field-description-container {
                     display: flex;
                 }
@@ -145,6 +164,7 @@ export class VcfFieldDescription extends LitElement {
                 vcf-field-description .expand-icon-container {
                     flex-grow: 0;
                     min-width: 20px;
+                    cursor: pointer;
                 }
 
                 vcf-field-description .expand-icon-container iron-icon {
@@ -160,22 +180,65 @@ export class VcfFieldDescription extends LitElement {
                     visibility: hidden;
                     white-space: normal;
                 }
+
+                vcf-field-description .field-description-feedback-container[data-state="SUCCESS"] {
+                    color: var(--field-description-success-color);
+                }
+
+                vcf-field-description .field-description-feedback-container[data-state="INFO"] {
+                    color: var(--field-description-info-color);
+                }
+
+                vcf-field-description .field-description-feedback-container[data-state="WARN"] {
+                    color: var(--field-description-warn-color);
+                }
+
+                vcf-field-description .field-description-feedback-container[data-state="ERROR"] {
+                    color: var(--field-description-error-color);
+                }
+
+                vcf-field-description .field-description-feedback-container iron-icon {
+                    height: 14px;
+                    vertical-align: top;
+                }
+
+                vcf-field-description .field-description-feedback {
+                    margin-top: 18px;
+                    display: table;
+                }
+
+                vcf-field-description .field-description-feedback > * {
+                    display: table-cell;
+                }
             </style>
 
-            <div class="field-description-container">
-                <div class="field-description">
-                    ${ this._setDoubleClickListener() }
-                    <span class="field-description-inner-span">
-                        ${ this.renderDescriptionAsHtml ? unsafeHTML(this.description) : this.description }
-                    </span>
-                    <span class="field-description-helper field-description-helper-textmeasurements">
-                        ${ this.renderDescriptionAsHtml ? unsafeHTML(this.description) : this.description }
-                        ${ this._takeMeasurementsAndReserveHeights() }
-                    </span>
+            <div class="field-description-component-wrapper">
+                <div class="field-description-container">
+                    <div class="field-description">
+                        ${ this._setDoubleClickListener() }
+                        ${ this.renderDescriptionAsHtml ? unsafeHTML(this.description) : html`<span>${this.description}` }</span>
+                        <div class="field-description-helper field-description-helper-textmeasurements" aria-hidden="true">
+                            ${ this.renderDescriptionAsHtml ? unsafeHTML(this.description) : this.description }
+                            ${ this._takeMeasurementsAndReserveHeights() }
+                        </div>
+                    </div>
+                    <div class="expand-icon-container">
+                        ${ this._renderExpandIcon() }
+                    </div>
                 </div>
-                <div class="expand-icon-container">
-                    ${ this._renderExpandIcon() }
+                <div class=field-description-feedback-container data-state="${this.feedbackState}">
+                    ${this.feedbackContent ? this.renderFeedback() : ''}
                 </div>
+            </div>`;
+    }
+
+    renderFeedback() {
+        if(!this.feedbackContent) return html``;
+
+        return html`
+            <div class="field-description-feedback" data-state="${this.feedbackState}" aria-live="assertive">
+                <iron-icon icon="vaadin:info"></iron-icon>
+                ${ this.renderFeedbackAsHtml ? unsafeHTML(this.feedbackContent) : html`<span>${this.feedbackContent}` }</span>
             </div>`;
     }
 

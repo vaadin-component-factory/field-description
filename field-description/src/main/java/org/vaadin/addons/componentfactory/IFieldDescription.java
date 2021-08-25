@@ -95,7 +95,7 @@ public interface IFieldDescription {
      *  - the feedback uses font-size: var(--lumo-font-size-xs)
      *        and line-height: var(--lumo-line-height-xs)
      */
-    void setFeedbackHeight(boolean reserveFeedbackHeight);
+    void setReserveFeedbackHeight(boolean reserveFeedbackHeight);
 
 
     // Default Value: false -- tabindex="-1" on client side

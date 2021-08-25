@@ -11,6 +11,7 @@ public class TestView extends VerticalLayout {
         FieldDescription fieldDescription1 = new FieldDescription();
         fieldDescription1.setDescription("This is a short description");
         fieldDescription1.setReadMoreFocusable(true);
+        fieldDescription1.setFeedback("Some feedback huh ?", IFieldDescription.FeedbackState.INFO);
 
         TextField textField1 = new TextField();
         textField1.setLabel("Short description:");

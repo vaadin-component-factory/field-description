@@ -15,12 +15,9 @@ import com.vaadin.flow.component.dependency.NpmPackage;
 @JsModule("./vcf-field-description.ts")
 //@CssImport(value = "@vaadin-component-factory/vcf-field-description/styles/style.css")
 public class FieldDescription extends Component implements IFieldDescription, HasSize {
-    public FieldDescription() {
-        getElement().setProperty("renderDescriptionAsHtml", false);
-    }
+    public FieldDescription() { }
 
     public FieldDescription(String description) {
-        this();
         setDescription(description);
     }
 
@@ -66,45 +63,42 @@ public class FieldDescription extends Component implements IFieldDescription, Ha
         getElement().setProperty("expandButtonIsKbFocusable", readMoreFocusable);
     }
 
-
-
-
-
-
     @Override
-    public FeedbackState getState() {
-        return null;
+    public String getFeedback() {
+        return getElement().getProperty("feedbackContent");
     }
 
     @Override
-    public String getFeedback() {
-        return null;
+    public FeedbackState getState() {
+        return FeedbackState.valueOf(getElement().getProperty("feedbackState"));
     }
 
     @Override
     public void setFeedback(String feedback, FeedbackState state) {
-
+        getElement().setProperty("renderFeedbackAsHtml", false);
+        getElement().setProperty("feedbackContent", feedback);
+        getElement().setProperty("feedbackState", state.name());
     }
 
     @Override
     public void setFeedbackAsHtml(String feedback, FeedbackState state) {
-
+        getElement().setProperty("renderFeedbackAsHtml", true);
+        getElement().setProperty("feedbackContent", feedback);
+        getElement().setProperty("feedbackState", state.name());
     }
 
     @Override
     public void removeFeedback() {
-
+        getElement().setProperty("feedbackContent",  null);
     }
 
     @Override
     public boolean isReserveFeedbackHeight() {
-        return false;
+        return getElement().getProperty("reserveFeedbackHeight", false);
     }
 
     @Override
-    public void setFeedbackHeight(boolean reserveFeedbackHeight) {
-
+    public void setReserveFeedbackHeight(boolean reserveFeedbackHeight) {
+        getElement().setProperty("reserveFeedbackHeight", reserveFeedbackHeight);
     }
-
-
 }
