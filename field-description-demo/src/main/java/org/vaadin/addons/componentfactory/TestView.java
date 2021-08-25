@@ -10,6 +10,7 @@ public class TestView extends VerticalLayout {
     public TestView() {
         FieldDescription fieldDescription1 = new FieldDescription();
         fieldDescription1.setDescription("This is a short description");
+        fieldDescription1.setReadMoreFocusable(true);
 
         TextField textField1 = new TextField();
         textField1.setLabel("Short description:");
@@ -18,6 +19,7 @@ public class TestView extends VerticalLayout {
 
         FieldDescription fieldDescription2 = new FieldDescription();
         fieldDescription2.setDescription("This is a very long description and also I decreased the width of the textfield. The idea here is to check if the styles will be applied and also if I'm able to expand the description box.");
+        fieldDescription2.setReserveDescriptionHeight(true);
 
         TextField textField2 = new TextField();
         textField2.setLabel("Long description:");

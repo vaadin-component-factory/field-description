@@ -46,6 +46,30 @@ public class FieldDescription extends Component implements IFieldDescription, Ha
         getElement().setProperty("description", description);
     }
 
+    @Override
+    public boolean isReserveDescriptionHeight() {
+        return getElement().getProperty("reserveDescriptionHeight", false);
+    }
+
+    @Override
+    public void setReserveDescriptionHeight(boolean reserveDescriptionHeight) {
+        getElement().setProperty("reserveDescriptionHeight", reserveDescriptionHeight);
+    }
+
+    @Override
+    public boolean isReadMoreFocusable() {
+        return getElement().getProperty("expandButtonIsKbFocusable", false);
+    }
+
+    @Override
+    public void setReadMoreFocusable(boolean readMoreFocusable) {
+        getElement().setProperty("expandButtonIsKbFocusable", readMoreFocusable);
+    }
+
+
+
+
+
 
     @Override
     public FeedbackState getState() {
@@ -73,16 +97,6 @@ public class FieldDescription extends Component implements IFieldDescription, Ha
     }
 
     @Override
-    public boolean isReserveDescriptionHeight() {
-        return false;
-    }
-
-    @Override
-    public void setReserveDescriptionHeight(boolean reserveDescriptionHeight) {
-
-    }
-
-    @Override
     public boolean isReserveFeedbackHeight() {
         return false;
     }
@@ -92,13 +106,5 @@ public class FieldDescription extends Component implements IFieldDescription, Ha
 
     }
 
-    @Override
-    public boolean isReadMoreFocusable() {
-        return false;
-    }
 
-    @Override
-    public void setReadMoreFocusable(boolean readMoreFocusable) {
-
-    }
 }
