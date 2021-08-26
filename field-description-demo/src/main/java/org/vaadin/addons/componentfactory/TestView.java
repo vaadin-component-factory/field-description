@@ -21,6 +21,8 @@ public class TestView extends VerticalLayout {
         FieldDescription fieldDescription2 = new FieldDescription();
         fieldDescription2.setDescription("This is a very long description and also I decreased the width of the textfield. The idea here is to check if the styles will be applied and also if I'm able to expand the description box.");
         fieldDescription2.setReserveDescriptionHeight(true);
+        fieldDescription2.setReserveFeedbackHeight(true);
+        fieldDescription2.setFeedback("Some feedback huh ?", IFieldDescription.FeedbackState.WARN);
 
         TextField textField2 = new TextField();
         textField2.setLabel("Long description:");
