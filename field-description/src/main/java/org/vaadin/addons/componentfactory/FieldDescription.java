@@ -3,17 +3,13 @@ package org.vaadin.addons.componentfactory;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 
-//@NpmPackage(value = "lumo-css-framework", version = "^4.0.10")
-//@NpmPackage(value = "line-awesome", version = "1.3.0")
 @Tag("vcf-field-description")
-//@NpmPackage(value = "@vaadin-component-factory/vcf-field-description", version = "0.0.1")
-//@JsModule("@vaadin-component-factory/vcf-field-description/src/vcf-field-description.ts")
-@JsModule("./vcf-field-description.ts")
-//@CssImport(value = "@vaadin-component-factory/vcf-field-description/styles/style.css")
+@NpmPackage(value = "@vaadin-component-factory/vcf-field-description", version = "0.0.4")
+@JsModule("@vaadin-component-factory/vcf-field-description/dist/vcf-field-description.js")
+//@JsModule("./vcf-field-description.ts")
 public class FieldDescription extends Component implements IFieldDescription, HasSize {
     public FieldDescription() { }
 
@@ -76,20 +72,20 @@ public class FieldDescription extends Component implements IFieldDescription, Ha
     @Override
     public void setFeedback(String feedback, FeedbackState state) {
         getElement().setProperty("renderFeedbackAsHtml", false);
-        getElement().setProperty("feedbackContent", feedback);
-        getElement().setProperty("feedbackState", state.name());
+        getElement().setProperty("feedbackContent", feedback != null ? feedback : "");
+        getElement().setProperty("feedbackState", state != null ? state.name() : FeedbackState.INFO.name());
     }
 
     @Override
     public void setFeedbackAsHtml(String feedback, FeedbackState state) {
         getElement().setProperty("renderFeedbackAsHtml", true);
-        getElement().setProperty("feedbackContent", feedback);
-        getElement().setProperty("feedbackState", state.name());
+        getElement().setProperty("feedbackContent", feedback != null ? feedback : "");
+        getElement().setProperty("feedbackState", state != null ? state.name() : FeedbackState.INFO.name());
     }
 
     @Override
     public void removeFeedback() {
-        getElement().setProperty("feedbackContent",  null);
+        getElement().setProperty("feedbackContent",  "");
     }
 
     @Override
