@@ -5,10 +5,13 @@ import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
+import com.vaadin.flow.component.dependency.Uses;
+import com.vaadin.flow.component.icon.Icon;
 
 @Tag("vcf-field-description")
 @NpmPackage(value = "@vaadin-component-factory/vcf-field-description", version = "0.0.4")
 @JsModule("@vaadin-component-factory/vcf-field-description/dist/vcf-field-description.js")
+@Uses(Icon.class)
 //@JsModule("./vcf-field-description.ts")
 public class FieldDescription extends Component implements IFieldDescription, HasSize {
     public FieldDescription() { }
